@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="rdfAnalystApp">
+<head>
+    <meta charset="utf-8"/>
+    <title>RDF Analyst</title>
+
+    <script src="js/ext/angular.min.js"></script>
+    <script src="js/ext/angular-route.min.js"></script>
+
+    <script src="js/RDFAnalystApp.js"></script>
+    <script src="js/controllers/query-list/QueryListController.js"></script>
+    <script src="js/controllers/query-details/QueryDetailsController.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="css/ext/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="css/app.css">
+</head>
+<body>
+<div id="appMainContainer">
+
+    <h1 id="appTitle">###### RDF Stream Analyst ######</h1>
+
+    <div ng-view></div>
+
+</div>
+</body>
+</html>

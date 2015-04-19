@@ -1,0 +1,31 @@
+<div ng-controller="QueryDetailsController">
+    <div class="alert alert-info" role="alert">
+        <p>
+            <h4 id="streamName">{{ queryName }}</h4>
+        </p>
+        <p>
+            <pre id="query">{{ query }}</pre>
+        </p>
+    </div>
+
+    <a ng-click="refreshResult()">Refresh results</a>
+
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th>Result processed</th>
+            <th>Subject</th>
+            <th>Predicate</th>
+            <th>Object</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="rdfTriple in queryResults">
+            <td>{{ rdfTriple.created | milliSecondsToTimeString }}</td>
+            <td>{{ rdfTriple.subject }}</td>
+            <td>{{ rdfTriple.predicate }}</td>
+            <td>{{ rdfTriple.object }}</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
