@@ -45,4 +45,16 @@ public class RabbitService {
         paramsMap.put(KEY_CALLBACK, commonProperties.composeRabbitToHereCallbackURL(topicName));
         return paramsMap;
     }
+
+    public void setRabbitProperties(RabbitProperties properties) {
+        this.properties = properties;
+    }
+
+    public void setCommonProperties(CommonProperties commonProperties) {
+        this.commonProperties = commonProperties;
+    }
+
+    public void setHttpRequester(HttpRequester httpRequester) {
+        this.httpRequester = httpRequester;
+    }
 }

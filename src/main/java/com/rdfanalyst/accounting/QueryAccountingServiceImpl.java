@@ -45,4 +45,8 @@ public class QueryAccountingServiceImpl implements QueryAccountingService {
     public boolean areWeCurrentlyListeningTopic(String topic) {
         return queryDao.doesQueryWithNameExist(topic);
     }
+
+    public void setQueryDao(QueryDao queryDao) {
+        this.queryDao = queryDao;
+    }
 }

@@ -29,7 +29,7 @@ public class RabbitProperties {
         this.relativeSubscriptionURL = relativeSubscriptionURL;
     }
 
-    public String getRelativeCallbackBaseURL() {
-        return relativeCallbackBaseURL;
+    public String composeRDFToRabitCallbackURL(String topic) {
+        return baseURL + relativeCallbackBaseURL + topic;
     }
 }

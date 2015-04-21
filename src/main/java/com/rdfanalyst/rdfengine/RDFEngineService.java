@@ -49,4 +49,16 @@ public class RDFEngineService {
         return paramsMap;
     }
 
+    public void setRDFEngineProperties(RDFEngineProperties rdfEngineProperties) {
+        this.rdfEngineProperties = rdfEngineProperties;
+    }
+
+    public void setCommonProperties(CommonProperties commonProperties) {
+        this.commonProperties = commonProperties;
+    }
+
+    public void setHttpRequester(HttpRequester httpRequester) {
+        this.httpRequester = httpRequester;
+    }
+
 }

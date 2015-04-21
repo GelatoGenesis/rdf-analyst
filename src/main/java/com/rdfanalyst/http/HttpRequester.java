@@ -29,7 +29,7 @@ public class HttpRequester {
         return makeHTTPPutOrPostRequest(new HttpPut(url), requestParameters);
     }
 
-    private HttpResponseInfo makeHTTPPutOrPostRequest(HttpEntityEnclosingRequestBase request, Map<String, String> requestParameters) {
+    protected HttpResponseInfo makeHTTPPutOrPostRequest(HttpEntityEnclosingRequestBase request, Map<String, String> requestParameters) {
         request.setEntity(composeParameters(requestParameters));
         CloseableHttpClient httpClient = HttpClients.createDefault();
         try(CloseableHttpResponse response = httpClient.execute(request)) {

@@ -12,6 +12,10 @@ To build the app (Here an in all following commands in Windows environment repla
 
 `./gradlew clean build`
 
+Unit tests can be run:
+
+`./gradlew test`
+
 To run the app in jetty container (Default is on port 9595. This can be changed in build.gradle):
 
 `./gradlew jettyRun`

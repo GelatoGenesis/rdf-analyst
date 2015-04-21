@@ -6,6 +6,7 @@ public class Query {
 
     public Query(String queryString) {
         try {
+            queryString = queryString.trim();
             name = queryString.split(" ")[2];
             query = queryString;
         } catch (Exception e) {
