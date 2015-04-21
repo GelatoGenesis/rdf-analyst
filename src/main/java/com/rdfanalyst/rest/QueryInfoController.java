@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
 
+import static com.rdfanalyst.rest.AddQueryResponse.*;
+
 @Controller
 public class QueryInfoController {
     // REGISTER STREAM OpinionMakers COMPUTED EVERY 5m AS SELECT ?opinionMaker FROM STREAM <http://kohalikudomavalitsused.ee/diffid> [RANGE 30m STEP 5m] WHERE { ?opinionMaker foaf:knows ?friend .?friend ?opinion ?resource.?opinionMaker ?opinion ?resource .FILTER ( timestamp(?friend) > timestamp(?opinionMaker) && ?opinion != sd:accesses ) } GROUP BY ( ?opinionMaker ) HAVING ( COUNT(DISTINCT ?friend) > 3 )
@@ -22,30 +24,38 @@ public class QueryInfoController {
     private ResultService resultService;
 
     @RequestMapping(value = "/add-query", method = RequestMethod.POST)
-    public @ResponseBody AddQueryResponse addQuery(@RequestBody String query) {
+    public
+    @ResponseBody
+    AddQueryResponse addQuery(@RequestBody String query) {
         try {
             queryAccountingService.registerQuery(new Query(query));
-            return AddQueryResponse.REQUEST_OK;
+            return ok();
         } catch (DuplicateQueryNameException e) {
-            return AddQueryResponse.REQUEST_FAIL_DUPLICATE_QUERY_NAME;
+            return duplicateNameError();
         } catch (Exception e) {
             logger.error("There was an exception while adding a new query. ", e);
-            return AddQueryResponse.REQUEST_FAIL_GENERAL_EXCEPTION;
+            return customError(e);
         }
     }
 
     @RequestMapping(value = "/all-queries", method = RequestMethod.GET)
-    public @ResponseBody Collection<Query> allQueries() {
+    public
+    @ResponseBody
+    Collection<Query> allQueries() {
         return queryAccountingService.getAllQueries();
     }
 
     @RequestMapping(value = "/queries/{queryName}", method = RequestMethod.GET)
-    public @ResponseBody Query queryDetails(@PathVariable String queryName) {
-        return queryAccountingService.findQueryByTopic(queryName);//QueryInMemoryDB.getQuery(queryName);
+    public
+    @ResponseBody
+    Query queryDetails(@PathVariable String queryName) {
+        return queryAccountingService.findQueryByTopic(queryName);
     }
 
     @RequestMapping(value = "/responses/{queryName}", method = RequestMethod.GET)
-    public @ResponseBody Collection<RDFTriple> responsesSince(@PathVariable String queryName) {
+    public
+    @ResponseBody
+    Collection<RDFTriple> responsesSince(@PathVariable String queryName) {
         return resultService.findAllResultsForTopic(queryName);
     }
 }

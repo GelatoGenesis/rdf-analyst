@@ -1,24 +1,20 @@
 package com.rdfanalyst.rabbit;
 
 import com.rdfanalyst.CommonProperties;
-import org.apache.commons.lang3.StringUtils;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
-import org.apache.http.message.BasicNameValuePair;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.rdfanalyst.http.HttpRequester;
+import com.rdfanalyst.http.HttpResponseInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+
+import static com.rdfanalyst.rabbit.RabbitRequestParamConstants.*;
 
 @Service
 public class RabbitService {
 
-    private static final Logger logger = LoggerFactory.getLogger(RabbitService.class);
+    public static final String RABBIT_REQUEST_OK_STATUS_INDICATOR = "202 Accepted";
 
     @Autowired
     private RabbitProperties properties;
@@ -26,29 +22,27 @@ public class RabbitService {
     @Autowired
     private CommonProperties commonProperties;
 
+    @Autowired
+    private HttpRequester httpRequester;
+
     public void subscribeToTopic(String topicName) {
-        try {
-            CloseableHttpClient rabbitClient = HttpClients.createDefault();
-            HttpPost rabbitRequest = new HttpPost(properties.getSubscriptionURL());
+        HttpResponseInfo httpResponseInfo = httpRequester.makeHTTPPostRequest(properties.getSubscriptionURL(), composeRequestParamsMap(topicName));
+        String responseStatus = httpResponseInfo.getStatus();
+        assertResponseOK(responseStatus);
+    }
 
-            rabbitRequest.setEntity(new UrlEncodedFormEntity(Arrays.asList(
-                    new BasicNameValuePair("hub.mode", "subscribe"),
-                    new BasicNameValuePair("hub.topic", topicName),
-                    new BasicNameValuePair("hub.verify", "async"),
-                    new BasicNameValuePair("hub.callback", commonProperties.composeRabbitToHereCallbackURL(topicName))
-            )));
-
-            try(CloseableHttpResponse rabbitResponse = rabbitClient.execute(rabbitRequest)) {
-                String responseStatus = rabbitResponse.getStatusLine().toString();
-                logger.debug("Response status from RabbitHub: " + responseStatus);
-                if(!StringUtils.contains(responseStatus, "202 Accepted")) {
-                    throw new RuntimeException("RabbitHub denied request with status message '" + responseStatus + "'");
-                }
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+    private void assertResponseOK(String responseStatus) {
+        if (!responseStatus.contains(RABBIT_REQUEST_OK_STATUS_INDICATOR)) {
+            throw new RuntimeException("RabbitHub denied request with status message '" + responseStatus + "'");
         }
+    }
+
+    private Map<String, String> composeRequestParamsMap(String topicName) {
+        Map<String, String> paramsMap = new HashMap<>();
+        paramsMap.put(KEY_MODE, PARAM_MODE_SUBSCRIBE);
+        paramsMap.put(KEY_TOPIC, topicName);
+        paramsMap.put(KEY_VERIFY, PARAM_VERIFY_ASYNC);
+        paramsMap.put(KEY_CALLBACK, commonProperties.composeRabbitToHereCallbackURL(topicName));
+        return paramsMap;
     }
 }

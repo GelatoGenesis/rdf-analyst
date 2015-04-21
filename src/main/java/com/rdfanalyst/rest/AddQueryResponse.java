@@ -2,17 +2,34 @@ package com.rdfanalyst.rest;
 
 public class AddQueryResponse {
 
-    public static final AddQueryResponse REQUEST_OK = new AddQueryResponse("OK");
-    public static final AddQueryResponse REQUEST_FAIL_DUPLICATE_QUERY_NAME = new AddQueryResponse("DUPLICATE_QUERY_NAME");
-    public static final AddQueryResponse REQUEST_FAIL_GENERAL_EXCEPTION = new AddQueryResponse("GENERAL_EXCEPTION");
+    private String message;
 
-    private String status;
-
-    private AddQueryResponse(String status) {
-        this.status = status;
+    private AddQueryResponse(String message) {
+        this.message = message;
     }
 
-    public String getStatus() {
-        return status;
+    public String getMessage() {
+        return message;
+    }
+
+    public static AddQueryResponse customError(Exception e) {
+        return new AddQueryResponse(getRootExceptionCause(e));
+    }
+
+    private static String getRootExceptionCause(Throwable e) {
+        if (e == null) {
+            return null;
+        } else if (e.getCause() != null) {
+            return getRootExceptionCause(e.getCause());
+        }
+        return e.getMessage();
+    }
+
+    public static AddQueryResponse ok() {
+        return new AddQueryResponse("OK");
+    }
+
+    public static AddQueryResponse duplicateNameError() {
+        return new AddQueryResponse("Query with this name already exists according to database.");
     }
 }

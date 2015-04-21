@@ -16,11 +16,11 @@ rdfAnalystControllers.controller('QueryListController', ['$scope', '$http',
         function _addQuery() {
             var queryString = $scope.newQuery;
             $http.post('/add-query', queryString).success(function(data) {
-                if (data.status == 'OK') {
+                if (data.message == 'OK') {
                     _loadAllQueries();
                     $scope.newQuery = '';
                 } else {
-                    alert("Server responded with an error: " + data.status);
+                    alert("Server responded with an error: " + data.message);
                 }
             }).error(function(data, status, headers, config) {
                 alert("Server responded with an error.");

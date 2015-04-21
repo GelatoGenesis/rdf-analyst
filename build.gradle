@@ -1,3 +1,7 @@
+def httpServerPort = 9595
+
+version = '1.0'
+
 buildscript {
     repositories {
         mavenLocal()
@@ -19,11 +23,10 @@ repositories {
 apply plugin: 'war'
 apply plugin: 'org.akhikhl.gretty'
 
-version = '1.0'
 gretty {
     springBoot = true
     servletContainer = 'jetty9'
-    port = 9595
+    port = httpServerPort
     contextPath = ''
 }
 
