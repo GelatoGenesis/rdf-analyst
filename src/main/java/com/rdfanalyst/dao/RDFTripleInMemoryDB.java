@@ -2,7 +2,10 @@ package com.rdfanalyst.dao;
 
 import com.rdfanalyst.accounting.RDFTriple;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class RDFTripleInMemoryDB {
 

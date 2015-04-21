@@ -1,9 +1,9 @@
 package com.rdfanalyst.rdfEngine;
 
-import com.rdfanalyst.CommonProperties;
+import com.rdfanalyst.MockCommonProperties;
 import com.rdfanalyst.accounting.Query;
 import com.rdfanalyst.http.MockHttpRequester;
-import com.rdfanalyst.rdfengine.RDFEngineProperties;
+import com.rdfanalyst.rabbit.MockRabbitProperties;
 import com.rdfanalyst.rdfengine.RDFEngineService;
 import org.junit.Before;
 import org.junit.Test;
@@ -16,26 +16,9 @@ public class RDFEngineServiceTest {
 
     @Before
     public void setUp() throws Exception {
-        rdfEngineService.setRDFEngineProperties(new RDFEngineProperties() {
-
-            @Override
-            public String composeRDFEngineTopicURL(String topic) {
-                return "http://127.0.0.1/" + topic;
-            }
-        });
-
-        rdfEngineService.setCommonProperties(new CommonProperties() {
-
-            @Override
-            public String composeRabbitToHereCallbackURL(String topic) {
-                return "http://127.0.0.1/";
-            }
-
-            @Override
-            public String getStreamName() {
-                return "some random stream name";
-            }
-        });
+        rdfEngineService.setRDFEngineProperties(new MockRDFEngineProperties());
+        rdfEngineService.setCommonProperties(new MockCommonProperties());
+        rdfEngineService.setRabbitProperties(new MockRabbitProperties());
     }
 
     @Test

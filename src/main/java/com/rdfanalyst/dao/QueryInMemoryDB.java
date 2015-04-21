@@ -8,7 +8,7 @@ import java.util.Map;
 
 public class QueryInMemoryDB {
 
-private static Map<String, Query> queries = new HashMap<>();
+    private static Map<String, Query> queries = new HashMap<>();
 
     public static void addQuery(Query query) {
         String queryName = query.getName();

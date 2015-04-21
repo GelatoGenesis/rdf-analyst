@@ -32,11 +32,11 @@ public class HttpRequester {
     protected HttpResponseInfo makeHTTPPutOrPostRequest(HttpEntityEnclosingRequestBase request, Map<String, String> requestParameters) {
         request.setEntity(composeParameters(requestParameters));
         CloseableHttpClient httpClient = HttpClients.createDefault();
-        try(CloseableHttpResponse response = httpClient.execute(request)) {
+        try (CloseableHttpResponse response = httpClient.execute(request)) {
             String responseStatus = response.getStatusLine().toString();
             StringBuilder wholeResponse = new StringBuilder();
             HttpEntity responseBody = response.getEntity();
-            try(BufferedReader responseBuffer = new BufferedReader(new InputStreamReader(responseBody.getContent()))) {
+            try (BufferedReader responseBuffer = new BufferedReader(new InputStreamReader(responseBody.getContent()))) {
                 String reponseBodyLine;
                 while ((reponseBodyLine = responseBuffer.readLine()) != null) {
                     wholeResponse.append(reponseBodyLine);

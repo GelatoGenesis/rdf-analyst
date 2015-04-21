@@ -1,8 +1,8 @@
 package com.rdfanalyst.rest;
 
 import com.rdfanalyst.accounting.QueryAccountingService;
-import com.rdfanalyst.accounting.ResultService;
 import com.rdfanalyst.accounting.RDFTriple;
+import com.rdfanalyst.accounting.ResultService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,8 +23,10 @@ public class QueryResultListener {
     private ResultService resultService;
 
     @RequestMapping("queryresponselistener/{queryName}")
-    public @ResponseBody String onQueryResponse(@PathVariable String queryName) {
-        if(queryAccountingService.areWeCurrentlyListeningTopic(queryName)) {
+    public
+    @ResponseBody
+    String onQueryResponse(@PathVariable String queryName) {
+        if (queryAccountingService.areWeCurrentlyListeningTopic(queryName)) {
             resultService.registerNewTriple(queryName, new RDFTriple(
                     "http://piksel.ee/mooste/index.php?tid=6sJYoa66lfUulx9RXXoJoikf6RKKHuTxg9iu8fY8diff/1429036812-1429043285/19/addition",
                     "http://vocab.deri.ie/diff#ReferenceInsertion",
