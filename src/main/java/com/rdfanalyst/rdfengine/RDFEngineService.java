@@ -11,8 +11,7 @@ import org.springframework.stereotype.Component;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.rdfanalyst.rdfengine.RDFEngineRequestParamConstants.KEY_QUERY;
-import static com.rdfanalyst.rdfengine.RDFEngineRequestParamConstants.KEY_STREAM_NAME;
+import static com.rdfanalyst.rdfengine.RDFEngineRequestParamConstants.*;
 
 @Component
 public class RDFEngineService {
@@ -63,8 +62,8 @@ public class RDFEngineService {
 
     private Map<String, String> composeRabbitToRDFEngineRequestParameters(String topic) {
         Map<String, String> paramsMap = new HashMap<>();
-        paramsMap.put("callbackUrl", rabbitProperties.composeRDFToRabitCallbackURL(topic));
-        paramsMap.put("streamName", commonProperties.getStreamName());
+        paramsMap.put(KEY_CALLBACK_URL, rabbitProperties.composeRDFToRabitCallbackURL(topic));
+        paramsMap.put(KEY_STREAM_NAME, commonProperties.getStreamName());
         return paramsMap;
     }
 
