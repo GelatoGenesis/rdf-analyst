@@ -1,4 +1,4 @@
-package com.rdfanalyst.rest;
+package com.rdfanalyst.local;
 
 import com.rdfanalyst.accounting.*;
 import org.slf4j.Logger;

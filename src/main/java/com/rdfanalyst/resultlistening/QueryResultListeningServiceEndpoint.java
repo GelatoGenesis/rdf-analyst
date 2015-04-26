@@ -1,4 +1,4 @@
-package com.rdfanalyst.rest;
+package com.rdfanalyst.resultlistening;
 
 import com.rdfanalyst.accounting.QueryAccountingService;
 import com.rdfanalyst.accounting.RDFTriple;

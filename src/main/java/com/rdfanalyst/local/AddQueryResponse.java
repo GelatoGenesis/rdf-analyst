@@ -1,4 +1,4 @@
-package com.rdfanalyst.rest;
+package com.rdfanalyst.local;
 
 public class AddQueryResponse {
 
