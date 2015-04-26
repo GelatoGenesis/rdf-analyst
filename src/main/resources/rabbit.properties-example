@@ -1,0 +1,3 @@
+baseURL=http://guest:guest@localhost:15670/
+relativeCallbackBaseURL=endpoint/x/amq.direct?hub.topic=
+relativeSubscriptionURL=subscribe/x/amq.direct

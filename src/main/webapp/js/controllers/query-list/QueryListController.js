@@ -4,9 +4,18 @@ rdfAnalystControllers.controller('QueryListController', ['$scope', '$http',
     function($scope, $http) {
 
         _loadAllStreams();
-        _loadAllQueries();
+        _loadActiveQueries();
+        _loadArchivedQueries();
 
         $scope.submitNewQuery = _addQuery;
+        $scope.activeQueriesInvisible = true;
+        $scope.archivedQueriesInvisible = true;
+        $scope.toggleActiveQueries = function () {
+            $scope.activeQueriesInvisible = !$scope.activeQueriesInvisible;
+        }
+        $scope.toggleArchivedQueries = function () {
+            $scope.archivedQueriesInvisible = !$scope.archivedQueriesInvisible;
+        }
 
         function _loadAllStreams() {
             $http.get('/available-streams').success(function(data) {
@@ -14,28 +23,31 @@ rdfAnalystControllers.controller('QueryListController', ['$scope', '$http',
             });
         }
 
-        function _loadAllQueries() {
-            $http.get('/all-queries').success(function(data) {
+        function _loadActiveQueries() {
+            $http.get('/available-queries').success(function(data) {
               $scope.queries = data;
             });
+        }
+
+        function _loadArchivedQueries () {
+            $scope.archivedQueries = [{
+                topic : "Mock Query",
+                query: "Some random query."
+            }];
         }
 
         function _addQuery() {
             var queryString = $scope.newQuery;
             var stream = $scope.newQueriesStream;
-            if(!stream) {
-                alert("You have to pick a stream before registering a query. If no streams are available then query can not be registered.");
-                return;
-            }
-            $http.post('/add-query', {query: queryString, stream: stream}).success(function(data) {
+            $http.post('/add-query', {query: queryString}).success(function(data) {
                 if (data.message == 'OK') {
-                    _loadAllQueries();
+                    _loadActiveQueries();
                     $scope.newQuery = '';
                 } else {
                     alert("Server responded with an error: " + data.message);
                 }
             }).error(function(data, status, headers, config) {
-                alert("Server responded with an error.");
+                alert("Server responded with an error. Status: " + status);
             });;
         }
     }]

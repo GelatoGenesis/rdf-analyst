@@ -2,7 +2,7 @@ package com.rdfanalyst.accounting;
 
 import com.rdfanalyst.dao.QueryDao;
 import com.rdfanalyst.rabbit.RabbitService;
-import com.rdfanalyst.rdfengine.RDFEngineServiceImpl;
+import com.rdfanalyst.rdf.engine.RDFEngineServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

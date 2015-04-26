@@ -1,4 +1,4 @@
-package com.rdfanalyst.rdfengine;
+package com.rdfanalyst.rdf.engine;
 
 public class StreamInfo {
 

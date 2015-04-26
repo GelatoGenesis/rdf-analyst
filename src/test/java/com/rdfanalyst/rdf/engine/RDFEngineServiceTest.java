@@ -1,10 +1,10 @@
-package com.rdfanalyst.rdfEngine;
+package com.rdfanalyst.rdf.engine;
 
 import com.rdfanalyst.MockCommonProperties;
 import com.rdfanalyst.accounting.Query;
 import com.rdfanalyst.http.MockHttpRequester;
 import com.rdfanalyst.rabbit.MockRabbitProperties;
-import com.rdfanalyst.rdfengine.RDFEngineServiceImpl;
+import com.rdfanalyst.rdf.engine.RDFEngineServiceImpl;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -24,13 +24,13 @@ public class RDFEngineServiceTest {
     @Test
     public void successfulRequestTest() {
         rdfEngineService.setHttpRequester(new MockHttpRequester("Everything went OK 200 OK was the response"));
-        rdfEngineService.registerQuery(new Query(VALID_EXAMPLE_QUERY, null));
+        rdfEngineService.registerQuery(new Query(VALID_EXAMPLE_QUERY));
     }
 
     @Test(expected = RuntimeException.class)
     public void failedRequestTest() {
         rdfEngineService.setHttpRequester(new MockHttpRequester("No success indicator here"));
-        rdfEngineService.registerQuery(new Query(VALID_EXAMPLE_QUERY, null));
+        rdfEngineService.registerQuery(new Query(VALID_EXAMPLE_QUERY));
     }
 
 }

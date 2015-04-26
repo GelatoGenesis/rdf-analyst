@@ -2,3 +2,7 @@
 rdf-analyst.iml
 .gradle
 build
+src/main/resources/rdf-engine.properties
+src/main/resources/rabbit.properties
+src/main/resources/common.properties
+src/main/resources/application.properties

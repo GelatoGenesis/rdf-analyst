@@ -1,4 +1,4 @@
-package com.rdfanalyst.rdfengine;
+package com.rdfanalyst.rdf.engine;
 
 import com.rdfanalyst.accounting.Query;
 
@@ -9,5 +9,7 @@ public interface RDFEngineService {
     void registerQuery(Query query);
 
     List<String> getAvailableRunningStreams();
+
+    List<Query> getAvailableQueries();
 
 }

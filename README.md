@@ -8,6 +8,8 @@ It communicates over HTTP with C-SPARQL enginge and RabbitHub. Configuration par
 
 Only dependency needed to build the application is Java 7. The rest (including gradle it self which is the build tool) will be downloaded by the build script.
 
+Before building the app for the first time make a copy of each property file in src/main/resources and remove -example from the end of the property file name. In the newly created property files change the properties to mach your setup.
+
 To build the app (Here an in all following commands in Windows environment replace the ./gradlew with gradlew.bat):
 
 `./gradlew clean build`

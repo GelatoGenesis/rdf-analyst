@@ -1,0 +1,3 @@
+#Properties regarding URLs dont affect the actual local URL or port. Those propeties are only meant for callback URL composition.
+appBaseURL=http://localhost:9595/
+relativeQueryResponseCallbackBaseURL=queryresponselistener/

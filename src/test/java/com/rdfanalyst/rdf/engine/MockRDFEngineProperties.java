@@ -1,6 +1,6 @@
-package com.rdfanalyst.rdfEngine;
+package com.rdfanalyst.rdf.engine;
 
-import com.rdfanalyst.rdfengine.RDFEngineProperties;
+import com.rdfanalyst.rdf.engine.RDFEngineProperties;
 
 public class MockRDFEngineProperties extends RDFEngineProperties {
 

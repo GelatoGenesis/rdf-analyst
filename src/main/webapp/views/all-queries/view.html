@@ -6,12 +6,13 @@
         <div class="panel-body">
             <form role="form">
                 <div class="form-group">
-                    <label for="newQueriesStream">Stream against what to query (should be same as in your query):</label>
-                    <select class="form-control" id="newQueriesStream" ng-model="newQueriesStream">
-                        <option ng-repeat="stream in streams" value="{{ stream }}">{{ stream }}</option>
-                    </select>
+                    Active streams: <br/>
+                    <ul>
+                       <li  ng-repeat="stream in streams">{{ stream }}</li>
+                    </ul>
                 </div>
                 <div class="form-group">
+                    <label for="newQuery">Query:</label>
                     <textarea style="width: 100%; height: 200px;" id="newQuery" ng-model="newQuery"></textarea>
                 </div>
                 <button type="submit" class="btn btn-default" ng-click="submitNewQuery()">Submit</button>
@@ -19,18 +20,52 @@
         </div>
     </div>
 
-    <h2>Registered queries:</h2>
-
-    <div ng-repeat="query in queries">
-        <a href="#/query/{{ query.name }}">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    {{ query.name }}
-                </div>
-                <div class="panel-body">
-                    <pre>{{ query.query }}</pre>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 style="float: left;">Active queries</h4>
+            <h4 class="glyphicon glyphicon-eye-open" style="float: right;" ng-click="toggleActiveQueries()"></h4>
+            <div style="clear: both;"></div>
+        </div>
+        <div class="panel-body" ng-hide="activeQueriesInvisible">
+            <div ng-repeat="query in queries">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Topic: <i>{{ query.topic }}</i>
+                        <br/>
+                        Stream: <i>{{ query.stream }}</i>
+                        <div style="float: right;" ng-show="{{ query.local }}">
+                            <a href="#/query/{{ query.topic }}">[NB! Active topic with the same name is registered locally. Click here to see info about results.]</a>
+                        </div>
+                    </div>
+                    <div>
+                        <pre>{{ query.query }}</pre>
+                    </div>
                 </div>
             </div>
-        </a>
+        </div>
+    </div>
+
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 style="float: left;">Archived local queries</h4>
+            <h4 class="glyphicon glyphicon-eye-open" style="float: right;" ng-click="toggleArchivedQueries()"></h4>
+            <div style="clear: both;"></div>
+        </div>
+        <div class="panel-body" ng-hide="archivedQueriesInvisible">
+            <div ng-repeat="query in archivedQueries">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Topic: <i>{{ query.topic }}</i>
+                        <div style="float: right;">
+                            <a href="#/query/{{ query.topic }}">[Results]</a>
+                        </div>
+                    </div>
+                    <div>
+                        <pre>{{ query.query }}</pre>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

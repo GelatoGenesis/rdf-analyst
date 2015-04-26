@@ -1,4 +1,4 @@
-package com.rdfanalyst.rdfengine;
+package com.rdfanalyst.rdf.engine;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
@@ -19,6 +19,10 @@ public class RDFEngineProperties {
 
     public String getAvailableStreamsInfoUrl() {
         return baseUrl + relativeAvailableStreamsBaseURL;
+    }
+
+    public String getAvailableQueriesInfoUrl() {
+        return baseUrl + relativeQueriesBaseURL;
     }
 
     public void setBaseUrl(String baseUrl) {

@@ -17,6 +17,6 @@ public class QueryAccountingServiceImplTest {
                 return true;
             }
         });
-        queryAccountingService.registerQuery(new Query(VALID_EXAMPLE_QUERY, null));
+        queryAccountingService.registerQuery(new Query(VALID_EXAMPLE_QUERY));
     }
 }

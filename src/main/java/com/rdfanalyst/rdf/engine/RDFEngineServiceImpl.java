@@ -1,9 +1,10 @@
-package com.rdfanalyst.rdfengine;
+package com.rdfanalyst.rdf.engine;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.rdfanalyst.CommonProperties;
 import com.rdfanalyst.accounting.Query;
+import com.rdfanalyst.dao.QueryDao;
 import com.rdfanalyst.http.HttpRequester;
 import com.rdfanalyst.http.HttpResponseInfo;
 import com.rdfanalyst.rabbit.RabbitProperties;
@@ -12,12 +13,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
-import static com.rdfanalyst.rdfengine.RDFEngineRequestParamConstants.*;
+import static com.rdfanalyst.rdf.engine.RDFEngineRequestParamConstants.*;
 
 @Component
 public class RDFEngineServiceImpl implements RDFEngineService {
@@ -42,6 +40,9 @@ public class RDFEngineServiceImpl implements RDFEngineService {
     @Autowired
     private HttpRequester httpRequester;
 
+    @Autowired
+    private QueryDao queryDao;
+
     public void registerQuery(Query query) {
         registerQueryToRDFEngineStream(query);
         registerRabbitToRDFEngineStream(query);
@@ -64,6 +65,41 @@ public class RDFEngineServiceImpl implements RDFEngineService {
         }
 
         return availableStreams;
+    }
+
+    @Override
+    public List<Query> getAvailableQueries() {
+        List<Query> availableQueries = new ArrayList<>();
+        try {
+            HttpResponseInfo availableQueriesResponse = httpRequester.makeHttpGetRequest(rdfEngineProperties.getAvailableQueriesInfoUrl());
+            assertHTTPResponseOK(availableQueriesResponse);
+            List<QueryInfo> queriesInfo = gson.fromJson(availableQueriesResponse.getBody(), new TypeToken<List<QueryInfo>>() {}.getType());
+            availableQueries.addAll(filterAndComplementRunningQueries(queriesInfo));
+        } catch (Exception e) {
+            logger.info("There was an exception while requesting or processing info about available running streams.", e);
+        }
+
+        return availableQueries;
+    }
+
+    private List<Query> filterAndComplementRunningQueries(List<QueryInfo> queriesInfo) {
+        List<Query> availableQueries = new ArrayList<>();
+        for(QueryInfo query : queriesInfo) {
+            if (query.isOfTypeQuery() && query.isRunning()) {
+                String topic = query.getId();
+                availableQueries.add(new Query(topic, query.getBody(), query.getStream(), doesLocalInfoAboutTopicExist(topic)));
+            }
+        }
+        return availableQueries;
+    }
+
+    private boolean doesLocalInfoAboutTopicExist(String topic) {
+        try {
+            return queryDao.doesQueryWithNameExist(topic);
+        } catch (Exception e) {
+            logger.error("There was an exception while trying to determine weather topic " + topic + " was local.", e);
+            return false;
+        }
     }
 
     private void registerQueryToRDFEngineStream(Query query) {

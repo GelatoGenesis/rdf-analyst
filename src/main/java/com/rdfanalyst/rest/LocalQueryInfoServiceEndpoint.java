@@ -12,9 +12,9 @@ import java.util.Collection;
 import static com.rdfanalyst.rest.AddQueryResponse.*;
 
 @Controller
-public class QueryInfoController {
+public class LocalQueryInfoServiceEndpoint {
 
-    private static final Logger logger = LoggerFactory.getLogger(QueryInfoController.class);
+    private static final Logger logger = LoggerFactory.getLogger(LocalQueryInfoServiceEndpoint.class);
 
     @Autowired
     private QueryAccountingService queryAccountingService;
@@ -27,7 +27,7 @@ public class QueryInfoController {
     @ResponseBody
     AddQueryResponse addQuery(@RequestBody AddQueryRequest addQueryRequest) {
         try {
-            queryAccountingService.registerQuery(new Query(addQueryRequest.getQuery(), addQueryRequest.getStream()));
+            queryAccountingService.registerQuery(new Query(addQueryRequest.getQuery()));
             return ok();
         } catch (DuplicateQueryNameException e) {
             return duplicateNameError();
@@ -54,7 +54,7 @@ public class QueryInfoController {
     @RequestMapping(value = "/responses/{queryName}", method = RequestMethod.GET)
     public
     @ResponseBody
-    Collection<RDFTriple> responsesSince(@PathVariable String queryName) {
+    Collection<RDFTriple> responses(@PathVariable String queryName) {
         return resultService.findAllResultsForTopic(queryName);
     }
 }

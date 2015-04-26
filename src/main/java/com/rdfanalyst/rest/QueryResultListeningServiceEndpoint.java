@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.Date;
 
 @Controller
-public class QueryResultListener {
+public class QueryResultListeningServiceEndpoint {
 
     public static final String REQUEST_SUCCESSFUL = "OK";
 
