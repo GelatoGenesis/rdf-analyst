@@ -11,8 +11,14 @@ public class RDFEngineProperties {
 
     private String relativeQueriesBaseURL;
 
+    private String relativeAvailableStreamsBaseURL;
+
     public String composeRDFEngineTopicURL(String topic) {
-        return baseUrl + relativeQueriesBaseURL + topic;
+        return baseUrl + relativeQueriesBaseURL + "/" + topic;
+    }
+
+    public String getAvailableStreamsInfoUrl() {
+        return baseUrl + relativeAvailableStreamsBaseURL;
     }
 
     public void setBaseUrl(String baseUrl) {
@@ -21,5 +27,9 @@ public class RDFEngineProperties {
 
     public void setRelativeQueriesBaseURL(String relativeQueriesBaseURL) {
         this.relativeQueriesBaseURL = relativeQueriesBaseURL;
+    }
+
+    public void setRelativeAvailableStreamsBaseURL(String relativeAvailableStreamsBaseURL) {
+        this.relativeAvailableStreamsBaseURL = relativeAvailableStreamsBaseURL;
     }
 }

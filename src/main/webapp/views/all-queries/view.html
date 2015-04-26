@@ -6,6 +6,12 @@
         <div class="panel-body">
             <form role="form">
                 <div class="form-group">
+                    <label for="newQueriesStream">Stream against what to query (should be same as in your query):</label>
+                    <select class="form-control" id="newQueriesStream" ng-model="newQueriesStream">
+                        <option ng-repeat="stream in streams" value="{{ stream }}">{{ stream }}</option>
+                    </select>
+                </div>
+                <div class="form-group">
                     <textarea style="width: 100%; height: 200px;" id="newQuery" ng-model="newQuery"></textarea>
                 </div>
                 <button type="submit" class="btn btn-default" ng-click="submitNewQuery()">Submit</button>

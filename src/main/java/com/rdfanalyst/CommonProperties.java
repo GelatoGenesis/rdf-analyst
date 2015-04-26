@@ -11,14 +11,8 @@ public class CommonProperties {
 
     private String relativeQueryResponseCallbackBaseURL;
 
-    private String streamName;
-
     public String composeRabbitToHereCallbackURL(String topic) {
         return appBaseURL + relativeQueryResponseCallbackBaseURL + topic;
-    }
-
-    public String getStreamName() {
-        return streamName;
     }
 
     public void setAppBaseURL(String appBaseURL) {
@@ -29,7 +23,4 @@ public class CommonProperties {
         this.relativeQueryResponseCallbackBaseURL = relativeQueryResponseCallbackBaseURL;
     }
 
-    public void setStreamName(String streamName) {
-        this.streamName = streamName;
-    }
 }

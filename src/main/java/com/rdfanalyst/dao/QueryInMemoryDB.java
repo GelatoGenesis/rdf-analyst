@@ -11,7 +11,7 @@ public class QueryInMemoryDB {
     private static Map<String, Query> queries = new HashMap<>();
 
     public static void addQuery(Query query) {
-        String queryName = query.getName();
+        String queryName = query.getTopic();
         if (!queryExists(queryName)) {
             queries.put(queryName, query);
         }

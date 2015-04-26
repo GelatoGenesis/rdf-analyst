@@ -2,10 +2,7 @@ package com.rdfanalyst.http;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpEntityEnclosingRequestBase;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.client.methods.HttpPut;
+import org.apache.http.client.methods.*;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
@@ -24,21 +21,32 @@ import java.util.Map;
 public class HttpRequester {
 
     private static final Logger logger = LoggerFactory.getLogger(HttpRequester.class);
+    public static final String HTTP_GET = "GET";
     public static final String HTTP_POST = "POST";
     public static final String HTTP_PUT = "PUT";
 
+
+    public HttpResponseInfo makeHttpGetRequest(String url) {
+        composeRequestLog(HTTP_GET, url, null);
+        return executeRequest(new HttpGet(url));
+    }
+
     public HttpResponseInfo makeHTTPPostRequest(String url, Map<String, String> requestParameters) {
-        logRequest(HTTP_POST, url, requestParameters);
+        logger.info(composeRequestLog(HTTP_POST, url, requestParameters));
         return makeHTTPPutOrPostRequest(new HttpPost(url), requestParameters);
     }
 
     public HttpResponseInfo makeHTTPPutRequest(String url, Map<String, String> requestParameters) {
-        logRequest(HTTP_PUT, url, requestParameters);
+        logger.info(composeRequestLog(HTTP_PUT, url, requestParameters));
         return makeHTTPPutOrPostRequest(new HttpPut(url), requestParameters);
     }
 
     protected HttpResponseInfo makeHTTPPutOrPostRequest(HttpEntityEnclosingRequestBase request, Map<String, String> requestParameters) {
         request.setEntity(composeParameters(requestParameters));
+        return executeRequest(request);
+    }
+
+    private HttpResponseInfo executeRequest(HttpRequestBase request) {
         CloseableHttpClient httpClient = HttpClients.createDefault();
         try (CloseableHttpResponse response = httpClient.execute(request)) {
             String responseStatus = response.getStatusLine().toString();
@@ -70,13 +78,16 @@ public class HttpRequester {
         }
     }
 
-    private void logRequest(String reqType, String url, Map<String, String> requestParameters) {
+    private String composeRequestLog(String reqType, String url, Map<String, String> requestParameters) {
         StringBuilder log = new StringBuilder("Starting a ").append(reqType).append(" request to URL ")
-                .append(url).append(" with parameters: ");
-        for (Map.Entry<String, String> param : requestParameters.entrySet()) {
-            log.append("(").append(param.getKey()).append("=").append(param.getValue()).append(") ");
+                .append(url);
+        if (requestParameters != null) {
+            log.append(" with parameters: ");
+            for (Map.Entry<String, String> param : requestParameters.entrySet()) {
+                log.append("(").append(param.getKey()).append("=").append(param.getValue()).append(") ");
+            }
         }
-        logger.info(log.toString());
+        return log.toString();
     }
 
 }

@@ -3,9 +3,16 @@
 rdfAnalystControllers.controller('QueryListController', ['$scope', '$http',
     function($scope, $http) {
 
+        _loadAllStreams();
         _loadAllQueries();
 
         $scope.submitNewQuery = _addQuery;
+
+        function _loadAllStreams() {
+            $http.get('/available-streams').success(function(data) {
+              $scope.streams = data;
+            });
+        }
 
         function _loadAllQueries() {
             $http.get('/all-queries').success(function(data) {
@@ -15,7 +22,12 @@ rdfAnalystControllers.controller('QueryListController', ['$scope', '$http',
 
         function _addQuery() {
             var queryString = $scope.newQuery;
-            $http.post('/add-query', queryString).success(function(data) {
+            var stream = $scope.newQueriesStream;
+            if(!stream) {
+                alert("You have to pick a stream before registering a query. If no streams are available then query can not be registered.");
+                return;
+            }
+            $http.post('/add-query', {query: queryString, stream: stream}).success(function(data) {
                 if (data.message == 'OK') {
                     _loadAllQueries();
                     $scope.newQuery = '';

@@ -2,7 +2,7 @@ package com.rdfanalyst.accounting;
 
 import com.rdfanalyst.dao.QueryDao;
 import com.rdfanalyst.rabbit.RabbitService;
-import com.rdfanalyst.rdfengine.RDFEngineService;
+import com.rdfanalyst.rdfengine.RDFEngineServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -15,14 +15,14 @@ public class QueryAccountingServiceImpl implements QueryAccountingService {
     private RabbitService rabbitService;
 
     @Autowired
-    private RDFEngineService rdfEngineService;
+    private RDFEngineServiceImpl rdfEngineService;
 
     @Autowired
     private QueryDao queryDao;
 
     @Override
     public void registerQuery(Query query) {
-        String topic = query.getName();
+        String topic = query.getTopic();
         if (queryDao.doesQueryWithNameExist(topic)) {
             throw new DuplicateQueryNameException();
         }
