@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
 
-import static com.rdfanalyst.rest.AddQueryResponse.*;
+import static com.rdfanalyst.local.AddQueryResponse.*;
 
 @Controller
 public class LocalQueryInfoServiceEndpoint {
@@ -37,21 +37,21 @@ public class LocalQueryInfoServiceEndpoint {
         }
     }
 
-    @RequestMapping(value = "/all-queries", method = RequestMethod.GET)
+    @RequestMapping(value = "/available-local-queries", method = RequestMethod.GET)
     public
     @ResponseBody
-    Collection<Query> allQueries() {
-        return queryAccountingService.getAllQueries();
+    Collection<Query> localQueries() {
+        return queryAccountingService.getArchivedQueries();
     }
 
-    @RequestMapping(value = "/queries/{queryName}", method = RequestMethod.GET)
+    @RequestMapping(value = "/available-local-queries/{queryName}", method = RequestMethod.GET)
     public
     @ResponseBody
     Query queryDetails(@PathVariable String queryName) {
         return queryAccountingService.findQueryByTopic(queryName);
     }
 
-    @RequestMapping(value = "/responses/{queryName}", method = RequestMethod.GET)
+    @RequestMapping(value = "/local-query-results/{queryName}", method = RequestMethod.GET)
     public
     @ResponseBody
     Collection<RDFTriple> responses(@PathVariable String queryName) {

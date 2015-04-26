@@ -6,7 +6,7 @@ public interface QueryAccountingService {
 
     void registerQuery(Query query);
 
-    Collection<Query> getAllQueries();
+    Collection<Query> getArchivedQueries();
 
     Query findQueryByTopic(String topic);
 

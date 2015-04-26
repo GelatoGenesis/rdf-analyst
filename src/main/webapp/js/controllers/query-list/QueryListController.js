@@ -5,16 +5,16 @@ rdfAnalystControllers.controller('QueryListController', ['$scope', '$http',
 
         _loadAllStreams();
         _loadActiveQueries();
-        _loadArchivedQueries();
+        _loadLocalQueries();
 
         $scope.submitNewQuery = _addQuery;
         $scope.activeQueriesInvisible = true;
-        $scope.archivedQueriesInvisible = true;
+        $scope.localQueriesInvisible = true;
         $scope.toggleActiveQueries = function () {
             $scope.activeQueriesInvisible = !$scope.activeQueriesInvisible;
         }
-        $scope.toggleArchivedQueries = function () {
-            $scope.archivedQueriesInvisible = !$scope.archivedQueriesInvisible;
+        $scope.toggleLocalQueries = function () {
+            $scope.localQueriesInvisible = !$scope.localQueriesInvisible;
         }
 
         function _loadAllStreams() {
@@ -29,11 +29,10 @@ rdfAnalystControllers.controller('QueryListController', ['$scope', '$http',
             });
         }
 
-        function _loadArchivedQueries () {
-            $scope.archivedQueries = [{
-                topic : "Mock Query",
-                query: "Some random query."
-            }];
+        function _loadLocalQueries () {
+            $http.get('/available-local-queries').success(function(data) {
+                $scope.localQueries = data;
+            });
         }
 
         function _addQuery() {
@@ -42,6 +41,7 @@ rdfAnalystControllers.controller('QueryListController', ['$scope', '$http',
             $http.post('/add-query', {query: queryString}).success(function(data) {
                 if (data.message == 'OK') {
                     _loadActiveQueries();
+                    _loadLocalQueries();
                     $scope.newQuery = '';
                 } else {
                     alert("Server responded with an error: " + data.message);

@@ -6,7 +6,7 @@ It's runs on Jetty Servlet container, uses Spring Boot in the backend and Angula
 
 It communicates over HTTP with C-SPARQL enginge and RabbitHub. Configuration parameters of those can be found at src/main/resources.
 
-Only dependency needed to build the application is Java 7. The rest (including gradle it self which is the build tool) will be downloaded by the build script.
+Only dependency needed to build the application is Java 7. The rest (including gradle itself which is the build tool) will be downloaded by the build script.
 
 Before building the app for the first time make a copy of each property file in src/main/resources and remove -example from the end of the property file name. In the newly created property files change the properties to mach your setup.
 

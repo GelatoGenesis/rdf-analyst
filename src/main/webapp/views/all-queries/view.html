@@ -48,12 +48,12 @@
 
     <div class="panel panel-default">
         <div class="panel-heading">
-            <h4 style="float: left;">Archived local queries</h4>
-            <h4 class="glyphicon glyphicon-eye-open" style="float: right;" ng-click="toggleArchivedQueries()"></h4>
+            <h4 style="float: left;">All local queries:</h4>
+            <h4 class="glyphicon glyphicon-eye-open" style="float: right;" ng-click="toggleLocalQueries()"></h4>
             <div style="clear: both;"></div>
         </div>
-        <div class="panel-body" ng-hide="archivedQueriesInvisible">
-            <div ng-repeat="query in archivedQueries">
+        <div class="panel-body" ng-hide="localQueriesInvisible">
+            <div ng-repeat="query in localQueries">
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         Topic: <i>{{ query.topic }}</i>

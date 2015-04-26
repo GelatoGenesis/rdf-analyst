@@ -32,7 +32,7 @@ public class QueryAccountingServiceImpl implements QueryAccountingService {
     }
 
     @Override
-    public Collection<Query> getAllQueries() {
+    public Collection<Query> getArchivedQueries() {
         return queryDao.getAllQueries();
     }
 

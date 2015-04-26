@@ -11,3 +11,23 @@
 [x-ng-click] {
     cursor: pointer;
 }
+
+.chart {
+    background: #eee;
+    padding: 3px;
+}
+
+.chart div {
+  width: 0;
+  transition: all 1s ease-out;
+  -moz-transition: all 1s ease-out;
+  -webkit-transition: all 1s ease-out;
+}
+
+div.chart {
+  font: 10px sans-serif;
+  text-align: right;
+  padding: 3px;
+  margin: 5px;
+  color: white;
+}

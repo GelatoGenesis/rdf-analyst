@@ -29,6 +29,7 @@ var rdfAnalystApp = angular.module('rdfAnalystApp', [
   ]);
 
 var rdfAnalystControllers = angular.module('rdfAnalystControllers', []);
+
 angular.module('rdfAnalystFilters', []).filter('milliSecondsToTimeString', function() {
      return function(millseconds) {
           return new Date(millseconds).customFormat("#DD#/#MM#/#YYYY# #hh#:#mm#:#ss#");
