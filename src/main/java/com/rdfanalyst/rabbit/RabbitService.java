@@ -25,7 +25,7 @@ public class RabbitService {
     @Autowired
     private HttpRequester httpRequester;
 
-    public void subscribeToTopic(String topicName) {
+    public void createExchangeAndSubscribeToIt(String topicName) {
         HttpResponseInfo httpResponseInfo = httpRequester.makeHTTPPostRequest(properties.getSubscriptionURL(), composeRequestParamsMap(topicName));
         String responseStatus = httpResponseInfo.getStatus();
         assertResponseOK(responseStatus);

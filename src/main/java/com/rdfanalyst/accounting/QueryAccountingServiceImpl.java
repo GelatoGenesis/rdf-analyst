@@ -26,7 +26,7 @@ public class QueryAccountingServiceImpl implements QueryAccountingService {
         if (queryDao.doesQueryWithNameExist(topic)) {
             throw new DuplicateQueryNameException();
         }
-        rabbitService.subscribeToTopic(topic);
+        rabbitService.createExchangeAndSubscribeToIt(topic);
         rdfEngineService.registerQuery(query);
         queryDao.addQuery(query);
     }

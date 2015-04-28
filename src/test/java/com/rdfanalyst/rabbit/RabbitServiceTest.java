@@ -18,13 +18,13 @@ public class RabbitServiceTest {
     @Test
     public void successfulRequestTest() {
         rabbitService.setHttpRequester(new MockHttpRequester("Everything went OK 202 Accepted was the response"));
-        rabbitService.subscribeToTopic("someTopic");
+        rabbitService.createExchangeAndSubscribeToIt("someTopic");
     }
 
     @Test(expected = RuntimeException.class)
     public void failedRequestTest() {
         rabbitService.setHttpRequester(new MockHttpRequester("No success indicator here"));
-        rabbitService.subscribeToTopic("someTopic");
+        rabbitService.createExchangeAndSubscribeToIt("someTopic");
     }
 
 }
