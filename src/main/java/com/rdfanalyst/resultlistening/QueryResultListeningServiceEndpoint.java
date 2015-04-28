@@ -28,7 +28,7 @@ public class QueryResultListeningServiceEndpoint {
     public
     @ResponseBody
     String onQueryResponse(@PathVariable String queryName, @RequestBody String requestBody) {
-        logger.info("Received a query response on topic " + queryName + ": " +requestBody);
+        logger.info("Received a query response on topic {}.", queryName);
         if (queryAccountingService.areWeCurrentlyListeningTopic(queryName)) {
             resultService.registerNewTriple(queryName, new RDFTriple(requestBody, "UNKNOWN", "UNKNOWN", new Date()));
         }
