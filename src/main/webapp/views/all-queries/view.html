@@ -1,4 +1,10 @@
 <div ng-controller="QueryListController">
+
+
+    <div class="alert alert-danger" ng-show="generalError">
+        {{ generalError }}
+    </div>
+
     <div class="panel panel-primary">
         <div class="panel-heading">
             Add a new query
@@ -7,6 +13,9 @@
             <form role="form">
                 <div class="form-group">
                     Active streams: <br/>
+                    <div class="alert alert-danger" ng-show="streamError">
+                        {{ streamError }}
+                    </div>
                     <ul>
                        <li  ng-repeat="stream in streams">{{ stream }}</li>
                     </ul>
@@ -14,6 +23,9 @@
                 <div class="form-group">
                     <label for="newQuery">Query:</label>
                     <textarea style="width: 100%; height: 200px;" id="newQuery" ng-model="newQuery"></textarea>
+                </div>
+                <div class="alert alert-danger" ng-show="queryAddingError">
+                    {{ queryAddingError }}
                 </div>
                 <button type="submit" class="btn btn-default" ng-click="submitNewQuery()">Submit</button>
             </form>
@@ -27,10 +39,13 @@
             <div style="clear: both;"></div>
         </div>
         <div class="panel-body" ng-hide="activeQueriesInvisible">
+            <div class="alert alert-danger" ng-show="queryError">
+                {{ queryError }}
+            </div>
             <div ng-repeat="query in queries">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        Topic: <i>{{ query.topic }}</i>
+                        Topic: <i>{{ query.topic }}</i> <a ng-click="cancelQuery(query.topic)">[Cancel topic in RDF engine.]</a>
                         <br/>
                         Stream: <i>{{ query.stream }}</i>
                         <div style="float: right;" ng-show="{{ query.local }}">
@@ -53,6 +68,9 @@
             <div style="clear: both;"></div>
         </div>
         <div class="panel-body" ng-hide="localQueriesInvisible">
+            <div class="alert alert-danger" ng-show="localQueryError">
+                {{ localQueryError }}
+            </div>
             <div ng-repeat="query in localQueries">
                 <div class="panel panel-default">
                     <div class="panel-heading">

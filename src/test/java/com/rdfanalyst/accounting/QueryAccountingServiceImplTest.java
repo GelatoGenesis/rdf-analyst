@@ -5,7 +5,7 @@ import org.junit.Test;
 
 public class QueryAccountingServiceImplTest {
 
-    private static final String VALID_EXAMPLE_QUERY = "REGISTER STREAM query1 AS CONSTRUCT { ?s ?p ?o } FROM STREAM <http://ex.org/rabbit> [RANGE 2s STEP 2s] WHERE { ?s ?p ?o }";
+    private static final String VALID_EXAMPLE_QUERY = "REGISTER QUERY query1 AS CONSTRUCT { ?s ?p ?o } FROM STREAM <http://ex.org/rabbit> [RANGE 2s STEP 2s] WHERE { ?s ?p ?o }";
 
     private QueryAccountingServiceImpl queryAccountingService = new QueryAccountingServiceImpl();
 

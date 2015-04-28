@@ -41,7 +41,7 @@ public class RabbitService {
         Map<String, String> paramsMap = new HashMap<>();
         paramsMap.put(KEY_MODE, PARAM_MODE_SUBSCRIBE);
         paramsMap.put(KEY_TOPIC, topicName);
-        paramsMap.put(KEY_VERIFY, PARAM_VERIFY_ASYNC);
+        paramsMap.put(KEY_VERIFY, PARAM_VERIFY_SYNC);
         paramsMap.put(KEY_CALLBACK, commonProperties.composeRabbitToHereCallbackURL(topicName));
         return paramsMap;
     }

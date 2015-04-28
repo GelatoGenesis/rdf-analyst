@@ -8,6 +8,6 @@ public class RabbitRequestParamConstants {
     public static final String KEY_CALLBACK = "hub.callback";
 
     public static final String PARAM_MODE_SUBSCRIBE = "subscribe";
-    public static final String PARAM_VERIFY_ASYNC = "async";
+    public static final String PARAM_VERIFY_SYNC = "sync";
 
 }

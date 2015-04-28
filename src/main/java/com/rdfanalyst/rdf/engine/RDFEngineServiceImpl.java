@@ -22,8 +22,6 @@ public class RDFEngineServiceImpl implements RDFEngineService {
 
     private static final Logger logger = LoggerFactory.getLogger(RDFEngineServiceImpl.class);
 
-
-
     public static final String RDF_ENGINE_RESPONSE_OK_INDICATOR = "200 OK";
 
     private static final Gson gson = new Gson();
@@ -60,26 +58,29 @@ public class RDFEngineServiceImpl implements RDFEngineService {
                     availableStreams.add(streamInfo.getStreamIRI());
                 }
             }
+            return availableStreams;
         } catch (Exception e) {
             logger.info("There was an exception while requesting or processing info about available running streams.", e);
+            throw new RuntimeException(e);
         }
-
-        return availableStreams;
     }
 
     @Override
     public List<Query> getAvailableQueries() {
-        List<Query> availableQueries = new ArrayList<>();
         try {
             HttpResponseInfo availableQueriesResponse = httpRequester.makeHttpGetRequest(rdfEngineProperties.getAvailableQueriesInfoUrl());
             assertHTTPResponseOK(availableQueriesResponse);
             List<QueryInfo> queriesInfo = gson.fromJson(availableQueriesResponse.getBody(), new TypeToken<List<QueryInfo>>() {}.getType());
-            availableQueries.addAll(filterAndComplementRunningQueries(queriesInfo));
+            return filterAndComplementRunningQueries(queriesInfo);
         } catch (Exception e) {
             logger.info("There was an exception while requesting or processing info about available running streams.", e);
+            throw new RuntimeException(e);
         }
+    }
 
-        return availableQueries;
+    @Override
+    public void deleteQuery(String topic) {
+        httpRequester.makeHTTPDeleteRequest(rdfEngineProperties.composeRDFEngineTopicURL(topic));
     }
 
     private List<Query> filterAndComplementRunningQueries(List<QueryInfo> queriesInfo) {

@@ -12,4 +12,6 @@ public interface RDFEngineService {
 
     List<Query> getAvailableQueries();
 
+    void deleteQuery(String topic);
+
 }

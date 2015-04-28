@@ -24,10 +24,15 @@ public class HttpRequester {
     public static final String HTTP_GET = "GET";
     public static final String HTTP_POST = "POST";
     public static final String HTTP_PUT = "PUT";
+    public static final String HTTP_DELETE = "DELETE";
 
+    public HttpResponseInfo makeHTTPDeleteRequest(String url) {
+        logger.info(composeRequestLog(HTTP_DELETE, url, null));
+        return executeRequest(new HttpDelete(url));
+    }
 
     public HttpResponseInfo makeHttpGetRequest(String url) {
-        composeRequestLog(HTTP_GET, url, null);
+        logger.info(composeRequestLog(HTTP_GET, url, null));
         return executeRequest(new HttpGet(url));
     }
 
@@ -89,5 +94,4 @@ public class HttpRequester {
         }
         return log.toString();
     }
-
 }
