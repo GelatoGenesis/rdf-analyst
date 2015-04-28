@@ -3,16 +3,18 @@ package com.rdfanalyst.resultlistening;
 import com.rdfanalyst.accounting.QueryAccountingService;
 import com.rdfanalyst.accounting.RDFTriple;
 import com.rdfanalyst.accounting.ResultService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 
 @Controller
 public class QueryResultListeningServiceEndpoint {
+
+    private static final Logger logger = LoggerFactory.getLogger(QueryResultListeningServiceEndpoint.class);
 
     public static final String REQUEST_SUCCESSFUL = "OK";
 
@@ -22,7 +24,7 @@ public class QueryResultListeningServiceEndpoint {
     @Autowired
     private ResultService resultService;
 
-    @RequestMapping("queryresponselistener/{queryName}")
+    @RequestMapping(value = "queryresponselistener/{queryName}", method = RequestMethod.POST)
     public
     @ResponseBody
     String onQueryResponse(@PathVariable String queryName) {
@@ -37,4 +39,11 @@ public class QueryResultListeningServiceEndpoint {
         return REQUEST_SUCCESSFUL;
     }
 
+    @RequestMapping(value = "queryresponselistener/{queryName}", method = RequestMethod.GET)
+    public
+    @ResponseBody
+    String rabbitHandshakeResponder(@PathVariable String queryName, @RequestParam("hub.challenge") String challenge) {
+        logger.info("Received a rabbit handshake challenge: " + challenge);
+        return challenge;
+    }
 }
