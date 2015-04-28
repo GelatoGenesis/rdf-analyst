@@ -27,7 +27,8 @@ public class QueryResultListeningServiceEndpoint {
     @RequestMapping(value = "queryresponselistener/{queryName}", method = RequestMethod.POST)
     public
     @ResponseBody
-    String onQueryResponse(@PathVariable String queryName) {
+    String onQueryResponse(@PathVariable String queryName, @RequestBody String requestBody) {
+        logger.info("Received a query response on topic " + queryName + ": " +requestBody);
         if (queryAccountingService.areWeCurrentlyListeningTopic(queryName)) {
             resultService.registerNewTriple(queryName, new RDFTriple(
                     "http://piksel.ee/mooste/index.php?tid=6sJYoa66lfUulx9RXXoJoikf6RKKHuTxg9iu8fY8diff/1429036812-1429043285/19/addition",
