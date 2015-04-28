@@ -57,10 +57,12 @@ public class HttpRequester {
             String responseStatus = response.getStatusLine().toString();
             StringBuilder wholeResponse = new StringBuilder();
             HttpEntity bodyEntity = response.getEntity();
-            try (BufferedReader responseBuffer = new BufferedReader(new InputStreamReader(bodyEntity.getContent()))) {
-                String reponseBodyLine;
-                while ((reponseBodyLine = responseBuffer.readLine()) != null) {
-                    wholeResponse.append(reponseBodyLine);
+            if(bodyEntity != null) {
+                try (BufferedReader responseBuffer = new BufferedReader(new InputStreamReader(bodyEntity.getContent()))) {
+                    String reponseBodyLine;
+                    while ((reponseBodyLine = responseBuffer.readLine()) != null) {
+                        wholeResponse.append(reponseBodyLine);
+                    }
                 }
             }
             String responseBody = wholeResponse.toString();
