@@ -14,7 +14,7 @@ import static com.rdfanalyst.rabbit.RabbitRequestParamConstants.*;
 @Service
 public class RabbitService {
 
-    public static final String RABBIT_REQUEST_OK_STATUS_INDICATOR = "202 Accepted";
+    public static final String RABBIT_REQUEST_OK_STATUS_INDICATOR = " 20";
 
     @Autowired
     private RabbitProperties properties;
