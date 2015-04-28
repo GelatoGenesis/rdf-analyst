@@ -9,8 +9,8 @@ rdfAnalystControllers.controller('QueryListController', ['$scope', '$http',
         _loadLocalQueries();
 
         $scope.submitNewQuery = _addQuery;
-        $scope.activeQueriesInvisible = true;
-        $scope.localQueriesInvisible = true;
+        $scope.activeQueriesInvisible = false;
+        $scope.localQueriesInvisible = false;
         $scope.toggleActiveQueries = function () {
             $scope.activeQueriesInvisible = !$scope.activeQueriesInvisible;
         }
