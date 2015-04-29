@@ -6,5 +6,5 @@ public interface ResultService {
 
     Collection<RDFTriple> findAllResultsForTopic(String topic);
 
-    void registerNewTriple(String queryName, RDFTriple rdfTriple);
+    void registerNewTriple(String queryName, RDFTriple RDFTriple);
 }

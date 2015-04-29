@@ -14,7 +14,7 @@ public class ResultServiceImpl implements ResultService {
     }
 
     @Override
-    public void registerNewTriple(String queryName, RDFTriple rdfTriple) {
-        RDFTripleInMemoryDB.addTriple(queryName, rdfTriple);
+    public void registerNewTriple(String queryName, RDFTriple RDFTriple) {
+        RDFTripleInMemoryDB.addTriple(queryName, RDFTriple);
     }
 }

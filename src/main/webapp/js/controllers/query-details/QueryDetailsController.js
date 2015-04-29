@@ -5,6 +5,7 @@ rdfAnalystControllers.controller('QueryDetailsController', ['$scope', '$routePar
     function($scope, $routeParams, $http) {
 
         var queryToBeRequested = $routeParams.queryName;
+        $scope.resultLimit = 100;
         $scope.countOfBars = 30;
         $scope.options = {width: 500, height: 300, 'bar': 'aaa'};
         $scope.data = [];

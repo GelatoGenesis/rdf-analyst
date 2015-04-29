@@ -1,10 +1,10 @@
 <div ng-controller="QueryDetailsController">
-    <p><a href="#">To Query list</a>
+    <p><a href="#">To Query list</a></p>
 
     <div class="alert alert-info" role="alert">
         <h4 id="topic">Topic: {{ query.topic }} <i>(Registered on stream {{ query.stream }})</i></h4>
         <p>
-        <pre id="query">{{ query.query }}</pre>
+            <pre id="query">{{ query.query }}</pre>
         </p>
     </div>
 
@@ -13,7 +13,9 @@
         <bar-chart height="500" data="data"></bar-chart>
     </div>
 
-
+    <p>
+        Display <input ng-model="resultLimit" type="number" min="1" style="width: 50px;"/> newest triples.
+    </p>
     <table class="table table-hover">
         <thead>
         <tr>
@@ -24,11 +26,11 @@
         </tr>
         </thead>
         <tbody>
-        <tr ng-repeat="rdfTriple in queryResults">
-            <td>{{ rdfTriple.created | milliSecondsToTimeString }}</td>
-            <td>{{ rdfTriple.subject }}</td>
-            <td>{{ rdfTriple.predicate }}</td>
-            <td>{{ rdfTriple.object }}</td>
+        <tr ng-repeat="result in queryResults | orderBy:'created':true | limitTo: resultLimit">
+            <td>{{ result.created | milliSecondsToTimeString }}</td>
+            <td>{{ result.subject }}</td>
+            <td>{{ result.predicate }}</td>
+            <td>{{ result.object }}</td>
         </tr>
         </tbody>
     </table>

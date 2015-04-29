@@ -16,6 +16,10 @@ public class RDFTriple {
         this.created = created;
     }
 
+    public Date getCreated() {
+        return created;
+    }
+
     public String getSubject() {
         return subject;
     }
@@ -26,9 +30,5 @@ public class RDFTriple {
 
     public String getObject() {
         return object;
-    }
-
-    public Date getCreated() {
-        return created;
     }
 }

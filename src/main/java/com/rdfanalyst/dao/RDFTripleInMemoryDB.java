@@ -9,7 +9,7 @@ import java.util.Map;
 
 public class RDFTripleInMemoryDB {
 
-    private static Map<String, ArrayList<RDFTriple>> rdfTriples = new HashMap<String, ArrayList<RDFTriple>>();
+    private static Map<String, ArrayList<RDFTriple>> rdfTriples = new HashMap<>();
 
     public static void addTriple(String queryName, RDFTriple triple) {
         if (!rdfTriples.containsKey(queryName)) {
