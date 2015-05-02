@@ -2,19 +2,25 @@
     <p><a href="#">To Query list</a></p>
 
     <div class="alert alert-info" role="alert">
-        <h4 id="topic">Topic: {{ query.topic }} <i>(Registered on stream {{ query.stream }})</i></h4>
+        <h4 id="topic">Topic: {{ query.topic }}</h4>
+
         <p>
-            <pre id="query">{{ query.query }}</pre>
+        <pre id="query">{{ query.query }}</pre>
         </p>
     </div>
 
-    <p>Divide the results to <input ng-model="countOfBars" type="number" min="1" max="100" style="width: 50px;"/> equal parts by time. <button ng-click="refreshResult()">Refresh results</button></p></p>
+    <p>Divide the results to <input ng-model="countOfBars" type="number" min="1" max="100" style="width: 50px;"/> equal
+        parts by time.
+        <button ng-click="refreshResult()">Refresh results</button>
+    </p>
+    </p>
     <div class="chart">
         <bar-chart height="500" data="data"></bar-chart>
     </div>
 
     <p>
-        Display <input ng-model="resultLimit" type="number" min="1" style="width: 50px;"/> newest triples.
+        Display <input ng-model="resultLimit" type="number" min="1" style="width: 50px;"/> newest triples. <i>(Total
+        number of triples: {{ triplesTotal }}).</i>
     </p>
     <table class="table table-hover">
         <thead>

@@ -6,7 +6,7 @@ import com.rdfanalyst.rdf.engine.RDFEngineServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.Collection;
+import java.util.List;
 
 @Component
 public class QueryAccountingServiceImpl implements QueryAccountingService {
@@ -32,7 +32,7 @@ public class QueryAccountingServiceImpl implements QueryAccountingService {
     }
 
     @Override
-    public Collection<Query> getArchivedQueries() {
+    public List<Query> getArchivedQueries() {
         return queryDao.getAllQueries();
     }
 
@@ -44,6 +44,10 @@ public class QueryAccountingServiceImpl implements QueryAccountingService {
     @Override
     public boolean areWeCurrentlyListeningTopic(String topic) {
         return queryDao.doesQueryWithNameExist(topic);
+    }
+
+    public void deleteQuery(String topic) {
+        queryDao.deleteQuery(topic);
     }
 
     public void setQueryDao(QueryDao queryDao) {

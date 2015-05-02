@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rdfanalyst.accounting.QueryAccountingService;
 import com.rdfanalyst.accounting.RDFTriple;
 import com.rdfanalyst.accounting.ResultService;
+import com.rdfanalyst.general.GeneralOKResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,8 +21,6 @@ public class QueryResultListeningServiceEndpoint {
 
     private static final Logger logger = LoggerFactory.getLogger(QueryResultListeningServiceEndpoint.class);
 
-    public static final String REQUEST_SUCCESSFUL = "OK";
-
     @Autowired
     private QueryAccountingService queryAccountingService;
 
@@ -31,18 +30,20 @@ public class QueryResultListeningServiceEndpoint {
     @RequestMapping(value = "queryresponselistener/{queryName}", method = RequestMethod.POST)
     public
     @ResponseBody
-    String onQueryResponse(@PathVariable String queryName, @RequestBody String requestBody) {
-        logger.debug("Received a query response on topic {}. The response was {}.", queryName, requestBody);
+    GeneralOKResponse onQueryResponse(@PathVariable String queryName, @RequestBody String requestBody) {
+        logger.info("Received a query response on topic {}.", queryName);
         try {
             if (queryAccountingService.areWeCurrentlyListeningTopic(queryName)) {
+                List<RDFTriple> newResults = new ArrayList<>();
                 for (RDFTriple triplet : parseTripletsFromRDFJSON(queryName, requestBody)) {
-                    resultService.registerNewTriple(queryName, triplet);
+                    newResults.add(triplet);
                 }
+                resultService.registerNewTriples(queryName, newResults);
             }
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        return REQUEST_SUCCESSFUL;
+        return new GeneralOKResponse();
     }
 
     @RequestMapping(value = "queryresponselistener/{queryName}", method = RequestMethod.GET)
@@ -59,12 +60,12 @@ public class QueryResultListeningServiceEndpoint {
         JsonFactory factory = new JsonFactory();
         ObjectMapper mapper = new ObjectMapper(factory);
         JsonNode rootNode = mapper.readTree(requestBody);
-        Iterator<Map.Entry<String,JsonNode>> fieldsIterator = rootNode.fields();
+        Iterator<Map.Entry<String, JsonNode>> fieldsIterator = rootNode.fields();
         while (fieldsIterator.hasNext()) {
             Map.Entry<String, JsonNode> field = fieldsIterator.next();
             String subject = field.getKey();
             JsonNode objectMap = field.getValue();
-            Iterator<Map.Entry<String,JsonNode>> objectMapIterator = objectMap.fields();
+            Iterator<Map.Entry<String, JsonNode>> objectMapIterator = objectMap.fields();
             while (objectMapIterator.hasNext()) {
                 Map.Entry<String, JsonNode> objectMapField = objectMapIterator.next();
                 String predicate = objectMapField.getKey();

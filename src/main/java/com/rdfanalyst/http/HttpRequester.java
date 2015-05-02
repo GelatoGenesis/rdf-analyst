@@ -57,7 +57,7 @@ public class HttpRequester {
             String responseStatus = response.getStatusLine().toString();
             StringBuilder wholeResponse = new StringBuilder();
             HttpEntity bodyEntity = response.getEntity();
-            if(bodyEntity != null) {
+            if (bodyEntity != null) {
                 try (BufferedReader responseBuffer = new BufferedReader(new InputStreamReader(bodyEntity.getContent()))) {
                     String reponseBodyLine;
                     while ((reponseBodyLine = responseBuffer.readLine()) != null) {

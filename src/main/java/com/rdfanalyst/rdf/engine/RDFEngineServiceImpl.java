@@ -13,7 +13,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import static com.rdfanalyst.rdf.engine.RDFEngineRequestParamConstants.*;
 
@@ -52,7 +55,8 @@ public class RDFEngineServiceImpl implements RDFEngineService {
         try {
             HttpResponseInfo availableStreamsResponse = httpRequester.makeHttpGetRequest(rdfEngineProperties.getAvailableStreamsInfoUrl());
             assertHTTPResponseOK(availableStreamsResponse);
-            List<StreamInfo> streamsInfo = gson.fromJson(availableStreamsResponse.getBody(), new TypeToken<List<StreamInfo>>() {}.getType());
+            List<StreamInfo> streamsInfo = gson.fromJson(availableStreamsResponse.getBody(), new TypeToken<List<StreamInfo>>() {
+            }.getType());
             for (StreamInfo streamInfo : streamsInfo) {
                 if (streamInfo.isStreamRunning()) {
                     availableStreams.add(streamInfo.getStreamIRI());
@@ -70,7 +74,8 @@ public class RDFEngineServiceImpl implements RDFEngineService {
         try {
             HttpResponseInfo availableQueriesResponse = httpRequester.makeHttpGetRequest(rdfEngineProperties.getAvailableQueriesInfoUrl());
             assertHTTPResponseOK(availableQueriesResponse);
-            List<QueryInfo> queriesInfo = gson.fromJson(availableQueriesResponse.getBody(), new TypeToken<List<QueryInfo>>() {}.getType());
+            List<QueryInfo> queriesInfo = gson.fromJson(availableQueriesResponse.getBody(), new TypeToken<List<QueryInfo>>() {
+            }.getType());
             return filterAndComplementRunningQueries(queriesInfo);
         } catch (Exception e) {
             logger.info("There was an exception while requesting or processing info about available running streams.", e);
@@ -85,7 +90,7 @@ public class RDFEngineServiceImpl implements RDFEngineService {
 
     private List<Query> filterAndComplementRunningQueries(List<QueryInfo> queriesInfo) {
         List<Query> availableQueries = new ArrayList<>();
-        for(QueryInfo query : queriesInfo) {
+        for (QueryInfo query : queriesInfo) {
             if (query.isOfTypeQuery() && query.isRunning()) {
                 String topic = query.getId();
                 availableQueries.add(new Query(topic, query.getBody(), query.getStream(), doesLocalInfoAboutTopicExist(topic)));

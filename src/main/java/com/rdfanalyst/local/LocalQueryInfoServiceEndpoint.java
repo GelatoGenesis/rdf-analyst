@@ -1,13 +1,14 @@
 package com.rdfanalyst.local;
 
 import com.rdfanalyst.accounting.*;
+import com.rdfanalyst.general.GeneralOKResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collection;
+import java.util.List;
 
 import static com.rdfanalyst.local.AddQueryResponse.*;
 
@@ -40,7 +41,7 @@ public class LocalQueryInfoServiceEndpoint {
     @RequestMapping(value = "/available-local-queries", method = RequestMethod.GET)
     public
     @ResponseBody
-    Collection<Query> localQueries() {
+    List<Query> localQueries() {
         return queryAccountingService.getArchivedQueries();
     }
 
@@ -51,10 +52,20 @@ public class LocalQueryInfoServiceEndpoint {
         return queryAccountingService.findQueryByTopic(queryName);
     }
 
-    @RequestMapping(value = "/local-query-results/{queryName}", method = RequestMethod.GET)
+    @RequestMapping(value = "/local-query-results/{topic}", method = RequestMethod.GET)
     public
     @ResponseBody
-    Collection<RDFTriple> responses(@PathVariable String queryName) {
-        return resultService.findAllResultsForTopic(queryName);
+    List<RDFTriple> responses(@PathVariable String topic) {
+        return resultService.findAllResultsForTopic(topic);
     }
+
+    @RequestMapping(value = "/available-local-queries/{topic}", method = RequestMethod.DELETE)
+    public @ResponseBody GeneralOKResponse deleteTopic(@PathVariable String topic) {
+        logger.info("Deletion of local data of topic {} requested.", topic);
+        resultService.clearResultsOfTopic(topic);
+        queryAccountingService.deleteQuery(topic);
+        return new GeneralOKResponse();
+    }
+
+
 }

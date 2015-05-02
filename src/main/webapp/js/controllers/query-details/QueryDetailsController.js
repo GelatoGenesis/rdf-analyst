@@ -10,6 +10,7 @@ rdfAnalystControllers.controller('QueryDetailsController', ['$scope', '$routePar
         $scope.options = {width: 500, height: 300, 'bar': 'aaa'};
         $scope.data = [];
         $scope.refreshResult = _initResultRDFs;
+        $scope.triplesTotal = 'Loading...';
 
         $http.get('/available-local-queries/' + queryToBeRequested).success(function(queryData) {
           $scope.query = queryData;
@@ -22,6 +23,7 @@ rdfAnalystControllers.controller('QueryDetailsController', ['$scope', '$routePar
                 queryResponsesData = mergeSort(queryResponsesData);
                 $scope.queryResults = queryResponsesData;
                 $scope.data = analyzeResultsForGraph(queryResponsesData);
+                $scope.triplesTotal = queryResponsesData.length;
             });
         }
 

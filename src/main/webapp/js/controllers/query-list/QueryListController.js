@@ -18,6 +18,19 @@ rdfAnalystControllers.controller('QueryListController', ['$scope', '$http',
             $scope.localQueriesInvisible = !$scope.localQueriesInvisible;
         }
 
+        $scope.deleteTopic = function (topic) {
+             if(confirm("Are you sure you want to delete the topic locally? All the results will also be deleted. If instead you wanted to cancel listening to this topic find the same topic in active queries list and cancel it there.")) {
+                 _clearErrors();
+                 $http.delete('/available-local-queries/' + topic).success(function(data){
+                    _loadAllStreams();
+                    _loadActiveQueries();
+                    _loadLocalQueries();
+                 }).error(function(data) {
+                    $scope.generalError = "There was an error deleting the topic " + topic + ": " + (data != null && data.error != null ? data.error : data);
+                 });
+             }
+        }
+
         $scope.cancelQuery = function(topic) {
             if(confirm("Are you sure you want to cancel quering this topic?")) {
                 $http.get('/cancel-query/' + topic).success(function(data) {

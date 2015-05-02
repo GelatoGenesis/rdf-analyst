@@ -3,8 +3,11 @@ package com.rdfanalyst.accounting;
 public class Query {
     private String topic;
     private String query;
-    private String stream;
-    private boolean local;
+    private transient String stream;
+    private transient boolean local;
+
+    public Query() {
+    }
 
     public Query(String topic, String queryString, String stream, boolean local) {
         this.topic = topic;
@@ -28,8 +31,16 @@ public class Query {
         return topic;
     }
 
+    public void setTopic(String topic) {
+        this.topic = topic;
+    }
+
     public String getQuery() {
         return query;
+    }
+
+    public void setQuery(String query) {
+        this.query = query;
     }
 
     public String getStream() {

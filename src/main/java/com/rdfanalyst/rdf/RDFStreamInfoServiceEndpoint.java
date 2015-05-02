@@ -15,7 +15,9 @@ public class RDFStreamInfoServiceEndpoint {
     private RDFEngineService rdfEngineService;
 
     @RequestMapping("/available-streams")
-    public @ResponseBody List<String> availableStreams() {
+    public
+    @ResponseBody
+    List<String> availableStreams() {
         return rdfEngineService.getAvailableRunningStreams();
     }
 

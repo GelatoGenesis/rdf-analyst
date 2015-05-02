@@ -13,11 +13,12 @@
             <form role="form">
                 <div class="form-group">
                     Active streams: <br/>
+
                     <div class="alert alert-danger" ng-show="streamError">
                         {{ streamError }}
                     </div>
                     <ul>
-                       <li  ng-repeat="stream in streams">{{ stream }}</li>
+                        <li ng-repeat="stream in streams">{{ stream }}</li>
                     </ul>
                 </div>
                 <div class="form-group">
@@ -36,6 +37,7 @@
         <div class="panel-heading">
             <h4 style="float: left;">Active queries</h4>
             <h4 class="glyphicon glyphicon-eye-open" style="float: right;" ng-click="toggleActiveQueries()"></h4>
+
             <div style="clear: both;"></div>
         </div>
         <div class="panel-body" ng-hide="activeQueriesInvisible">
@@ -45,11 +47,14 @@
             <div ng-repeat="query in queries">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        Topic: <i>{{ query.topic }}</i> <a ng-click="cancelQuery(query.topic)">[Cancel topic in RDF engine.]</a>
+                        Topic: <i>{{ query.topic }}</i> <a ng-click="cancelQuery(query.topic)">[Cancel topic in RDF
+                        engine.]</a>
                         <br/>
                         Stream: <i>{{ query.stream }}</i>
+
                         <div style="float: right;" ng-show="{{ query.local }}">
-                            <a href="#/query/{{ query.topic }}">[NB! Active topic with the same name is registered locally. Click here to see info about results.]</a>
+                            <a href="#/query/{{ query.topic }}">[NB! Active topic with the same name is registered
+                                locally. Click here to see info about results.]</a>
                         </div>
                     </div>
                     <div>
@@ -65,6 +70,7 @@
         <div class="panel-heading">
             <h4 style="float: left;">All local queries:</h4>
             <h4 class="glyphicon glyphicon-eye-open" style="float: right;" ng-click="toggleLocalQueries()"></h4>
+
             <div style="clear: both;"></div>
         </div>
         <div class="panel-body" ng-hide="localQueriesInvisible">
@@ -74,7 +80,8 @@
             <div ng-repeat="query in localQueries">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        Topic: <i>{{ query.topic }}</i>
+                        Topic: <i>{{ query.topic }}</i> <a ng-click="deleteTopic(query.topic)">[Delete topic and all the results of it locally ]</a>
+
                         <div style="float: right;">
                             <a href="#/query/{{ query.topic }}">[Results]</a>
                         </div>

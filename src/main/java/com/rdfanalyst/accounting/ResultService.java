@@ -1,10 +1,12 @@
 package com.rdfanalyst.accounting;
 
-import java.util.Collection;
+import java.util.List;
 
 public interface ResultService {
 
-    Collection<RDFTriple> findAllResultsForTopic(String topic);
+    List<RDFTriple> findAllResultsForTopic(String topic);
 
-    void registerNewTriple(String queryName, RDFTriple RDFTriple);
+    void registerNewTriples(String queryName, List<RDFTriple> rdfTriples);
+
+    void clearResultsOfTopic(String topic);
 }

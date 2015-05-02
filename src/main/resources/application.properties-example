@@ -1,1 +1,5 @@
 logging.level.com.rdfanalyst: DEBUG
+spring.datasource.url=jdbc:mysql://localhost/rdfanalyst
+spring.datasource.username=rdfanalyst
+spring.datasource.password=rdfanalyst
+spring.datasource.driver-class-name=com.mysql.jdbc.Driver

@@ -2,7 +2,6 @@ package com.rdfanalyst.rdf;
 
 import com.rdfanalyst.accounting.Query;
 import com.rdfanalyst.general.GeneralOKResponse;
-import com.rdfanalyst.rabbit.RabbitService;
 import com.rdfanalyst.rdf.engine.RDFEngineService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,13 +18,15 @@ public class RDFQueryRegistrationServiceEndpoint {
     private RDFEngineService rdfEngineService;
 
     @RequestMapping("/available-queries")
-    public @ResponseBody
+    public
+    @ResponseBody
     List<Query> availableQueries() {
         return rdfEngineService.getAvailableQueries();
     }
 
     @RequestMapping("/cancel-query/{topic}")
-    public @ResponseBody
+    public
+    @ResponseBody
     GeneralOKResponse cancelQuery(@PathVariable String topic) {
         rdfEngineService.deleteQuery(topic);
         return new GeneralOKResponse();
