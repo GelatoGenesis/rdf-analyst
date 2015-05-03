@@ -5,10 +5,15 @@ import com.rdfanalyst.rabbit.RabbitService;
 import com.rdfanalyst.rdf.engine.RDFEngineServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+
 
 import java.util.List;
 
+
 @Component
+@Transactional(propagation = Propagation.REQUIRED)
 public class QueryAccountingServiceImpl implements QueryAccountingService {
 
     @Autowired

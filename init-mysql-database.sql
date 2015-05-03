@@ -16,9 +16,9 @@ create table rdf_triple (
     id int(20) unsigned auto_increment primary key,
     topic varchar(50) not null,
     received_ms numeric(21,0) not null,
-    subject varchar(2000),
-    predicate varchar(2000),
-    object varchar(2000),
+    subject blob,
+    predicate blob,
+    object blob,
     foreign key (topic) references query(topic)
 );
 
