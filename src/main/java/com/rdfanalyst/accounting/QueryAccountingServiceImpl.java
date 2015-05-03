@@ -2,7 +2,7 @@ package com.rdfanalyst.accounting;
 
 import com.rdfanalyst.dao.QueryDao;
 import com.rdfanalyst.rabbit.RabbitService;
-import com.rdfanalyst.rdf.engine.RDFEngineServiceImpl;
+import com.rdfanalyst.rdf.engine.RDFEngineService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Propagation;
@@ -20,7 +20,7 @@ public class QueryAccountingServiceImpl implements QueryAccountingService {
     private RabbitService rabbitService;
 
     @Autowired
-    private RDFEngineServiceImpl rdfEngineService;
+    private RDFEngineService rdfEngineService;
 
     @Autowired
     private QueryDao queryDao;
